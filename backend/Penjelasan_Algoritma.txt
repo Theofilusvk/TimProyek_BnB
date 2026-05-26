@@ -1,0 +1,30 @@
+1. Terminologi yang Digunakan
+- Simpul (Node): titik pada pohon ruang status.
+- Ongkos (Cost): nilai batas yang dihitung dengan fungsi heuristik.
+- Simpul hidup (Live Node): simpul yang masih berada di antrian.
+- Simpul mati (Dead Node): simpul yang sudah diekspansi atau di-prune.
+- Simpul-E (E-Node): simpul yang sedang diekspansi.
+
+2. Prinsip B&B
+- Menggunakan BFS yang dilengkapi least cost search (memilih simpul dengan ongkos terkecil, bukan FIFO).
+- Fungsi heuristik untuk taksiran cost: c_hat(i) = f_hat(i) + g_hat(i)
+  - f_hat(i) = ongkos mencapai simpul i dari akar (total biaya kandidat yang sudah dipilih).
+  - g_hat(i) = taksiran ongkos sisa (estimasi biaya termurah untuk sisa slot anggota tim).
+- Kriteria Pemangkasan (Pruning):
+  - Nilai simpul >= nilai terbaik sejauh ini (best_cost).
+  - Simpul tidak feasible (biaya melebih budget atau sisa kandidat kurang).
+
+3. Tahapan Algoritma
+  1. Masukkan simpul akar ke dalam antrian prioritas Q.
+  2. Jika Q kosong, proses selesai.
+  3. Pilih simpul i dengan c_hat(i) terkecil dari Q.
+  4. Jika simpul i adalah solusi, perbarui solusi terbaik jika lebih optimal.
+  5. Jika bukan solusi, bangkitkan anak-anaknya (kiri: pilih kandidat, kanan: tidak pilih).
+  6. Hitung c_hat untuk tiap anak dan masukkan ke Q jika tidak terpotong (pruned).
+  7. Ulangi dari langkah 2.
+
+4. Struktur Data (BBSummary)
+- nodes_generated: total simpul yang dibangkitkan.
+- nodes_explored: simpul-E yang diperluas.
+- nodes_pruned: simpul yang dipangkas karena tidak optimal / melanggar batasan.
+- expansion_order: mencatat urutan simpul-E yang diekspansi untuk melacak jalannya algoritma.
