@@ -7,6 +7,9 @@ __pycache__/
 venv/
 .env
 
+# Markdown files
+*.md
+
 # IDE
 .vscode/
 .idea/
