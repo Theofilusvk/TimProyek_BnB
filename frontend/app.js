@@ -1,8 +1,21 @@
 const API_URL = 'http://localhost:8000';
 
+function generateCandidateInputs() {
+  const n = parseInt(document.getElementById('n').value) || 0;
+  const container = document.getElementById('candidate-inputs');
+  container.innerHTML = '';
+  for (let i = 0; i < n; i++) {
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.className = 'candidate-cost';
+    input.placeholder = `Kandidat ${i + 1}`;
+    container.appendChild(input);
+  }
+}
+
 async function solve() {
-  const candidates = document.getElementById('candidates').value
-    .split(',').map(s => parseInt(s.trim()));
+  const inputs = document.querySelectorAll('.candidate-cost');
+  const candidates = Array.from(inputs).map(inp => parseInt(inp.value) || 0);
   const k      = parseInt(document.getElementById('k').value);
   const budget = parseInt(document.getElementById('budget').value);
 

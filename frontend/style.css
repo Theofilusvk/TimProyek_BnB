@@ -66,3 +66,14 @@ th, td {
   font-size: 22px;
   font-weight: bold;
 }
+
+.candidate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.candidate-cost {
+  margin-top: 0;
+}
