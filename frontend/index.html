@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <title>Pemilihan Tim Proyek</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <h2>Pemilihan Tim</h2>
 
   <label>n (jumlah kandidat)
-    <input type="number" id="n" value="">
+    <input type="number" id="n" value="" oninput="generateCandidateInputs()" min="1">
   </label>
-  <label>k (ukuran tim, 5–10 orang)
+  <label>k (ukuran tim)
     <input type="number" id="k" value="">
   </label>
   <label>B (batas anggaran)
     <input type="number" id="budget" value="">
   </label>
   <label>Biaya tiap kandidat
-    <textarea id="candidates" rows="3"></textarea>
+    <div id="candidate-inputs" class="candidate-grid"></div>
   </label>
 
   <div class="btns">
@@ -31,4 +33,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>

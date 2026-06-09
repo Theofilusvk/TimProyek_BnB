@@ -164,6 +164,8 @@ class BranchBound:
                         self.insert(left_child)
                     else:
                         summary["nodes_pruned"] += 1
+            else:
+                summary["nodes_pruned"] += 1
             sisa_kandidat = n - (level + 1)
             butuh_orang = k - len(current.selected)
             if (sisa_kandidat >= butuh_orang):
@@ -174,6 +176,8 @@ class BranchBound:
                     self.insert(right_child)
                 else:
                     summary["nodes_pruned"] += 1
+            else:
+                summary["nodes_pruned"] += 1
         summary["time"] = time.time() - start_time
         ada_solusi = False
         if (len(best_team) == k and best_cost <= budget):
