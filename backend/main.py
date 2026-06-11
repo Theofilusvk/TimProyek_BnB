@@ -34,6 +34,14 @@ class SolveResponse(BaseModel):
 
 @app.post("/solve", response_model=SolveResponse)
 def solve_team(request: SolveRequest):
+    n = len(request.candidates)
+    if n < 12:
+        raise HTTPException(status_code=400, detail="Jumlah kandidat (n) minimal 12")
+    if not (5 <= request.k <= 10):
+        raise HTTPException(status_code=400, detail="Ukuran tim (k) harus antara 5 dan 10")
+    if request.k > n:
+        raise HTTPException(status_code=400, detail="Ukuran tim (k) tidak boleh lebih dari jumlah kandidat (n)")
+
     bnb = BranchBound()
     
     # Menjalankan algoritma BnB

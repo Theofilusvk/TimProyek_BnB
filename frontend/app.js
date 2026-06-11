@@ -14,10 +14,24 @@ function generateCandidateInputs() {
 }
 
 async function solve() {
+  const n = parseInt(document.getElementById('n').value) || 0;
+  if (n < 12) {
+    alert("Jumlah kandidat (n) harus minimal 12.");
+    return;
+  }
+  const k = parseInt(document.getElementById('k').value) || 0;
+  if (k < 5 || k > 10) {
+    alert("Ukuran tim (k) harus antara 5 dan 10.");
+    return;
+  }
+  if (k > n) {
+    alert("Ukuran tim (k) tidak boleh lebih dari jumlah kandidat (n).");
+    return;
+  }
+
   const inputs = document.querySelectorAll('.candidate-cost');
   const candidates = Array.from(inputs).map(inp => parseInt(inp.value) || 0);
-  const k      = parseInt(document.getElementById('k').value);
-  const budget = parseInt(document.getElementById('budget').value);
+  const budget = parseInt(document.getElementById('budget').value) || 0;
 
   document.getElementById('hasil').innerHTML = '<p>Memproses...</p>';
 
@@ -38,12 +52,16 @@ async function solve() {
 function tampilkan(data, candidates) {
   const { selected_team, total_cost, bb_summary } = data;
 
+  const formatRupiah = (angka) => {
+    return angka.toLocaleString('id-ID');
+  };
+
   const rows = selected_team.map(i =>
-    `<tr><td>Kandidat ${i + 1}</td><td>Rp ${candidates[i]}</td></tr>`
+    `<tr><td>Kandidat ${i + 1}</td><td>Rp ${formatRupiah(candidates[i])}</td></tr>`
   ).join('');
 
   document.getElementById('hasil').innerHTML = `
-    <h3>Tim Terpilih — Total: Rp ${total_cost}</h3>
+    <h3>Tim Terpilih — Total: Rp ${formatRupiah(total_cost)}</h3>
     <table>
       <thead><tr><th>Anggota</th><th>Biaya</th></tr></thead>
       <tbody>${rows}</tbody>
