@@ -11,11 +11,11 @@
 
   <h2>Pemilihan Tim</h2>
 
-  <label>n (jumlah kandidat)
-    <input type="number" id="n" value="" oninput="generateCandidateInputs()" min="1">
+  <label>n (jumlah kandidat, n ≥ 12)
+    <input type="number" id="n" value="" oninput="generateCandidateInputs()" min="12">
   </label>
-  <label>k (ukuran tim)
-    <input type="number" id="k" value="">
+  <label>k (ukuran tim, 5 ≤ k ≤ 10)
+    <input type="number" id="k" value="" min="5" max="10">
   </label>
   <label>B (batas anggaran)
     <input type="number" id="budget" value="">
