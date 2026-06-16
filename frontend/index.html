@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pemilihan Tim Proyek</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -18,6 +19,14 @@
     <div class="card">
       <h2>Input Data</h2>
 
+      <!-- tombol preset ukuran kandidat -->
+      <div class="preset-group">
+        <span class="preset-label">Preset Ukuran:</span>
+        <button id="btn-small"  class="btn-preset" onclick="applyPreset(12)">Small (n=12)</button>
+        <button id="btn-medium" class="btn-preset" onclick="applyPreset(18)">Medium (n=18)</button>
+        <button id="btn-large"  class="btn-preset" onclick="applyPreset(24)">Large (n=24)</button>
+      </div>
+
       <div class="form-grid">
         <!-- input jumlah kandidat, saat diisi langsung generate kotak biaya -->
         <div class="form-group">
@@ -33,24 +42,25 @@
 
         <!-- input batas anggaran -->
         <div class="form-group full-width">
-          <label for="budget">Batas Anggaran (B)</label>
-          <input type="number" id="budget" placeholder="contoh: 400">
+          <label for="budget">Batas Anggaran (B) <span class="hint-inline">(integer > 0)</span></label>
+          <input type="number" id="budget" min="1" placeholder="contoh: 400">
         </div>
       </div>
 
       <!-- kotak input biaya tiap kandidat, muncul otomatis sesuai n -->
-      <div class="form-group" style="margin-top: 16px;">
-        <label>Biaya Tiap Kandidat</label>
+      <div class="form-group" style="margin-top: 16px;" id="candidate-section" style="display:none;">
+        <label>Biaya Tiap Kandidat <span class="hint-inline">(c[i], integer)</span></label>
         <div id="candidate-inputs" class="candidate-grid"></div>
       </div>
 
       <!-- tombol aksi -->
       <div class="btns">
-        <button class="btn-primary" onclick="solve()">Jalankan B&amp;B</button>
+        <button id="btn-solve" class="btn-primary" onclick="solve()">Jalankan B&amp;B</button>
+        <button id="btn-reset" class="btn-secondary" onclick="resetForm()">Reset</button>
       </div>
     </div>
 
-    <!-- hasil yang ditampilkan-->
+    <!-- hasil yang ditampilkan -->
     <div id="hasil"></div>
   </div>
 

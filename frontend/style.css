@@ -5,7 +5,7 @@
   padding: 0;
 }
 
-/* tampilan dasar halaman*/
+/* tampilan dasar halaman */
 body {
   font-family: 'Segoe UI', system-ui, sans-serif;
   background-image: url('background.png');
@@ -21,12 +21,12 @@ body {
   align-items: center;
 }
 
-/* line utama*/
+/* area utama */
 .container {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 580px;
+  max-width: 640px;
   padding: 5rem 1.2rem 3rem;
 }
 
@@ -57,7 +57,6 @@ header .subtitle {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-/* input data*/
 .card h2 {
   font-size: 13px;
   font-weight: 600;
@@ -67,7 +66,51 @@ header .subtitle {
   margin-bottom: 1rem;
 }
 
-/* input n dan k*/
+/* ── Tombol Preset ───────────────────────────────────────────── */
+.preset-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  padding: 10px 14px;
+  background: #f4f3ef;
+  border: 1px solid #e0ddd5;
+  border-radius: 8px;
+}
+
+.preset-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b6a64;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  white-space: nowrap;
+}
+
+.btn-preset {
+  background: #fff;
+  color: #2c4a8c;
+  border: 1.5px solid #2c4a8c;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+
+.btn-preset:hover {
+  background: #2c4a8c;
+  color: #fff;
+}
+
+.btn-preset.active {
+  background: #2c4a8c;
+  color: #fff;
+}
+
+/* ── Form Grid ───────────────────────────────────────────────── */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -80,7 +123,6 @@ header .subtitle {
   gap: 5px;
 }
 
-/* input budget*/
 .form-group.full-width {
   grid-column: 1 / -1;
 }
@@ -97,7 +139,7 @@ label {
   font-size: 12px;
 }
 
-input {
+input[type="number"] {
   background: #f4f3ef;
   border: 1px solid #e0ddd5;
   border-radius: 7px;
@@ -108,28 +150,44 @@ input {
   transition: border-color .15s;
 }
 
-input:focus {
+input[type="number"]:focus {
   outline: none;
   border-color: #2c4a8c;
 }
 
-/* grid kotak biaya tiap kandidat */
+/* ── Grid Kandidat ───────────────────────────────────────────── */
 .candidate-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
   gap: 8px;
   margin-top: 8px;
+}
+
+.candidate-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.candidate-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #2c4a8c;
+  text-transform: uppercase;
+  letter-spacing: .3px;
 }
 
 .candidate-cost {
   background: #f4f3ef;
   border: 1px solid #e0ddd5;
   border-radius: 7px;
-  padding: 8px 10px;
+  padding: 8px 6px;
   font-size: 13px;
   color: #1c1c1a;
   width: 100%;
   text-align: center;
+  transition: border-color .15s;
 }
 
 .candidate-cost:focus {
@@ -137,13 +195,13 @@ input:focus {
   border-color: #2c4a8c;
 }
 
+/* ── Tombol Aksi ─────────────────────────────────────────────── */
 .btns {
   display: flex;
   gap: 8px;
   margin-top: 20px;
 }
 
-/* tombol utama*/
 .btn-primary {
   background: #2c4a8c;
   color: #fff;
@@ -156,11 +214,8 @@ input:focus {
   transition: background .15s;
 }
 
-.btn-primary:hover {
-  background: #1e3469;
-}
+.btn-primary:hover { background: #1e3469; }
 
-/* tombol sekunder */
 .btn-secondary {
   background: transparent;
   color: #6b6a64;
@@ -172,33 +227,89 @@ input:focus {
   transition: border-color .15s;
 }
 
-.btn-secondary:hover {
-  border-color: #6b6a64;
-}
+.btn-secondary:hover { border-color: #6b6a64; }
 
-/* area hasil dari javascript */
-#hasil {
-  margin-top: 4px;
-}
-
-#hasil h3 {
-  font-size: 15px;
-  font-weight: 600;
-  background: #e6f4ed;
-  color: #1a7a4a;
-  border: 1px solid #1a7a4a;
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin-bottom: 12px;
-}
-
-#hasil p {
+/* ── Loading ─────────────────────────────────────────────────── */
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
   color: #6b6a64;
   font-size: 14px;
-  padding: 12px 0;
 }
 
-/* tabel tim terpilih */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid #e0ddd5;
+  border-top-color: #2c4a8c;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Alert Validasi ──────────────────────────────────────────── */
+.alert-warn,
+.alert-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.alert-warn {
+  background: #fffbeb;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+}
+
+.alert-error {
+  background: #fef2f2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+}
+
+/* ── Alert No Solution ───────────────────────────────────────── */
+.alert-no-solution {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fffbeb;
+  border: 1px solid #f59e0b;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #92400e;
+}
+
+.alert-no-solution .alert-icon { font-size: 20px; flex-shrink: 0; }
+.alert-no-solution p { margin-top: 4px; font-size: 13px; opacity: .85; }
+
+/* ── Result Header ───────────────────────────────────────────── */
+.result-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #e6f4ed;
+  border: 1px solid #1a7a4a;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #1a7a4a;
+}
+
+.result-header .result-icon { font-size: 20px; flex-shrink: 0; }
+.result-header p { margin-top: 4px; font-size: 13px; }
+
+/* ── Tabel Tim Terpilih ──────────────────────────────────────── */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -207,6 +318,7 @@ table {
   border: 1px solid #e0ddd5;
   border-radius: 10px;
   overflow: hidden;
+  margin-bottom: 16px;
 }
 
 thead th {
@@ -226,42 +338,102 @@ tbody td {
   border-bottom: 1px solid #e0ddd5;
 }
 
-tbody tr:last-child td {
-  border-bottom: none;
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #f4f3ef; }
+
+.badge-kandidat {
+  display: inline-block;
+  background: #e8eef8;
+  color: #2c4a8c;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: .3px;
 }
 
-tbody tr:hover {
-  background: #f4f3ef;
+/* ── Section Title ───────────────────────────────────────────── */
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #2c4a8c;
+  margin-bottom: 10px;
+  margin-top: 4px;
 }
 
-/* kartu statistik B&B */
+/* ── Statistik B&B (4 kolom) ─────────────────────────────────── */
 .stats {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  margin-top: 12px;
+  margin-bottom: 18px;
 }
 
 .stat {
-  flex: 1;
   background: #fff;
   border: 1px solid #e0ddd5;
   border-radius: 8px;
-  padding: 14px;
+  padding: 14px 10px;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   color: #6b6a64;
+  text-transform: uppercase;
+  letter-spacing: .3px;
 }
 
 .stat span {
   display: block;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   color: #2c4a8c;
   margin-bottom: 4px;
 }
 
-/* tampilan di hp */
-@media (max-width: 480px) {
+/* ── Tabel Expansion Order ───────────────────────────────────── */
+.expansion-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e0ddd5;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.expansion-table {
+  border: none;
+  border-radius: 0;
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
+.expansion-table thead th {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.expansion-table tbody td {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.text-center { text-align: center !important; }
+.text-right  { text-align: right !important; font-variant-numeric: tabular-nums; }
+
+.truncate-note {
+  font-size: 12px;
+  color: #6b6a64;
+  text-align: center;
+  padding: 8px;
+  border-top: 1px solid #e0ddd5;
+  background: #f4f3ef;
+}
+
+/* ── Area Hasil ──────────────────────────────────────────────── */
+#hasil { margin-top: 4px; }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 520px) {
   .form-grid { grid-template-columns: 1fr; }
-  .stats { flex-direction: column; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .preset-group { gap: 6px; }
 }

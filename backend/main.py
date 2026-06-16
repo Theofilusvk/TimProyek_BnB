@@ -1,8 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List
-import time
+from typing import List, Dict, Any
 
 from algorithm.branch_bound import BranchBound
 
@@ -23,11 +22,14 @@ class SolveRequest(BaseModel):
     budget: int
 
 class BBSummary(BaseModel):
+    nodes_generated: int
     nodes_explored: int
     nodes_pruned: int
     time_ms: float
+    expansion_order: List[Dict[str, Any]]
 
 class SolveResponse(BaseModel):
+    ada_solusi: bool
     selected_team: List[int]
     total_cost: int
     bb_summary: BBSummary
@@ -41,23 +43,23 @@ def solve_team(request: SolveRequest):
         raise HTTPException(status_code=400, detail="Ukuran tim (k) harus antara 5 dan 10")
     if request.k > n:
         raise HTTPException(status_code=400, detail="Ukuran tim (k) tidak boleh lebih dari jumlah kandidat (n)")
+    if request.budget <= 0:
+        raise HTTPException(status_code=400, detail="Anggaran (B) harus lebih dari 0")
 
     bnb = BranchBound()
-    
+
     # Menjalankan algoritma BnB
     team, cost, ada_solusi, summary = bnb.jalankan(request.candidates, request.k, request.budget)
-    
-    if not ada_solusi:
-        # Jika Anda ingin mengembalikan response khusus saat tidak ada solusi
-        # Bisa juga dibuat me-return 404 atau 400.
-        pass
 
     return SolveResponse(
+        ada_solusi=ada_solusi,
         selected_team=team,
         total_cost=cost,
         bb_summary=BBSummary(
+            nodes_generated=summary["nodes_generated"],
             nodes_explored=summary["nodes_explored"],
             nodes_pruned=summary["nodes_pruned"],
-            time_ms=summary["time"] * 1000  # konversi ke ms untuk frontend
+            time_ms=summary["time"] * 1000,
+            expansion_order=summary["expansion_order"]
         )
     )
