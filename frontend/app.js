@@ -31,7 +31,7 @@ async function solve() {
     return;
   }
 
-  // ambil semua nilai biaya dari kotak input kandidat
+  // mengambil semua nilai biaya dari kotak input kandidat
   const inputs = document.querySelectorAll('.candidate-cost');
   const candidates = Array.from(inputs).map(inp => parseInt(inp.value) || 0);
   const budget = parseInt(document.getElementById('budget').value) || 0;
@@ -62,7 +62,7 @@ function tampilkan(data, candidates) {
     return angka.toLocaleString('id-ID');
   };
 
-  // buat baris tabel dari kandidat yang terpilih
+  // baris tabel dari kandidat yang terpilih
   const rows = selected_team.map(i =>
     `<tr><td>Kandidat ${i + 1}</td><td>Rp ${formatRupiah(candidates[i])}</td></tr>`
   ).join('');
