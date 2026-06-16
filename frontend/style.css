@@ -1,79 +1,439 @@
-body {
-  font-family: sans-serif;
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 0 16px;
-}
-
-label {
-  display: block;
-  margin-top: 12px;
-  font-size: 14px;
-}
-
-input, textarea {
-  display: block;
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  font-size: 14px;
+/* reset bawaan browser */
+*, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.btns {
-  margin-top: 16px;
+/* tampilan dasar halaman */
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-image: url('background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #1c1c1a;
+  font-size: 15px;
+  min-height: 100vh;
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  align-items: center;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-#hasil {
-  margin-top: 24px;
-}
-
-table {
+/* area utama */
+.container {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 12px;
+  max-width: 640px;
+  padding: 5rem 1.2rem 3rem;
 }
 
-th, td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-}
-
-.stats {
-  display: flex;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.stat {
-  flex: 1;
-  border: 1px solid #ccc;
-  padding: 12px;
+/* judul halaman */
+header {
+  margin-bottom: 1.6rem;
   text-align: center;
 }
 
-.stat span {
-  display: block;
+header h1 {
   font-size: 22px;
-  font-weight: bold;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
+header .subtitle {
+  font-size: 13px;
+  color: #6b6a64;
+}
+
+/* kotak form input */
+.card {
+  background: #fff;
+  border: 1px solid #e0ddd5;
+  border-radius: 12px;
+  padding: 1.8rem 2rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #2c4a8c;
+  margin-bottom: 1rem;
+}
+
+/* ── Tombol Preset ───────────────────────────────────────────── */
+.preset-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  padding: 10px 14px;
+  background: #f4f3ef;
+  border: 1px solid #e0ddd5;
+  border-radius: 8px;
+}
+
+.preset-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b6a64;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  white-space: nowrap;
+}
+
+.btn-preset {
+  background: #fff;
+  color: #2c4a8c;
+  border: 1.5px solid #2c4a8c;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+
+.btn-preset:hover {
+  background: #2c4a8c;
+  color: #fff;
+}
+
+.btn-preset.active {
+  background: #2c4a8c;
+  color: #fff;
+}
+
+/* ── Form Grid ───────────────────────────────────────────────── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #3a3a36;
+}
+
+.hint-inline {
+  font-weight: 400;
+  color: #9a9890;
+  font-size: 12px;
+}
+
+input[type="number"] {
+  background: #f4f3ef;
+  border: 1px solid #e0ddd5;
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-size: 14px;
+  color: #1c1c1a;
+  width: 100%;
+  transition: border-color .15s;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: #2c4a8c;
+}
+
+/* ── Grid Kandidat ───────────────────────────────────────────── */
 .candidate-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
   gap: 8px;
   margin-top: 8px;
 }
 
+.candidate-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.candidate-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #2c4a8c;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+
 .candidate-cost {
-  margin-top: 0;
+  background: #f4f3ef;
+  border: 1px solid #e0ddd5;
+  border-radius: 7px;
+  padding: 8px 6px;
+  font-size: 13px;
+  color: #1c1c1a;
+  width: 100%;
+  text-align: center;
+  transition: border-color .15s;
+}
+
+.candidate-cost:focus {
+  outline: none;
+  border-color: #2c4a8c;
+}
+
+/* ── Tombol Aksi ─────────────────────────────────────────────── */
+.btns {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  background: #2c4a8c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.btn-primary:hover { background: #1e3469; }
+
+.btn-secondary {
+  background: transparent;
+  color: #6b6a64;
+  border: 1px solid #e0ddd5;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+
+.btn-secondary:hover { border-color: #6b6a64; }
+
+/* ── Loading ─────────────────────────────────────────────────── */
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  color: #6b6a64;
+  font-size: 14px;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid #e0ddd5;
+  border-top-color: #2c4a8c;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Alert Validasi ──────────────────────────────────────────── */
+.alert-warn,
+.alert-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.alert-warn {
+  background: #fffbeb;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+}
+
+.alert-error {
+  background: #fef2f2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+}
+
+/* ── Alert No Solution ───────────────────────────────────────── */
+.alert-no-solution {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fffbeb;
+  border: 1px solid #f59e0b;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #92400e;
+}
+
+.alert-no-solution .alert-icon { font-size: 20px; flex-shrink: 0; }
+.alert-no-solution p { margin-top: 4px; font-size: 13px; opacity: .85; }
+
+/* ── Result Header ───────────────────────────────────────────── */
+.result-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #e6f4ed;
+  border: 1px solid #1a7a4a;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #1a7a4a;
+}
+
+.result-header .result-icon { font-size: 20px; flex-shrink: 0; }
+.result-header p { margin-top: 4px; font-size: 13px; }
+
+/* ── Tabel Tim Terpilih ──────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: #fff;
+  border: 1px solid #e0ddd5;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+thead th {
+  background: #f4f3ef;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #6b6a64;
+  text-align: left;
+  border-bottom: 1px solid #e0ddd5;
+}
+
+tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e0ddd5;
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #f4f3ef; }
+
+.badge-kandidat {
+  display: inline-block;
+  background: #e8eef8;
+  color: #2c4a8c;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: .3px;
+}
+
+/* ── Section Title ───────────────────────────────────────────── */
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #2c4a8c;
+  margin-bottom: 10px;
+  margin-top: 4px;
+}
+
+/* ── Statistik B&B (4 kolom) ─────────────────────────────────── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.stat {
+  background: #fff;
+  border: 1px solid #e0ddd5;
+  border-radius: 8px;
+  padding: 14px 10px;
+  text-align: center;
+  font-size: 11px;
+  color: #6b6a64;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+
+.stat span {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c4a8c;
+  margin-bottom: 4px;
+}
+
+/* ── Tabel Expansion Order ───────────────────────────────────── */
+.expansion-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e0ddd5;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.expansion-table {
+  border: none;
+  border-radius: 0;
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
+.expansion-table thead th {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.expansion-table tbody td {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.text-center { text-align: center !important; }
+.text-right  { text-align: right !important; font-variant-numeric: tabular-nums; }
+
+.truncate-note {
+  font-size: 12px;
+  color: #6b6a64;
+  text-align: center;
+  padding: 8px;
+  border-top: 1px solid #e0ddd5;
+  background: #f4f3ef;
+}
+
+/* ── Area Hasil ──────────────────────────────────────────────── */
+#hasil { margin-top: 4px; }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .preset-group { gap: 6px; }
 }

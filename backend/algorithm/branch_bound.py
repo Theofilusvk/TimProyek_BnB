@@ -75,7 +75,8 @@ class BranchBound:
     # budget : batas biaya
     # n : jumlah total kandidat
     # sisa_orang : jumlah orang yang masih harus dipilih
-    # tersedia : list kandidat yang masih bisa dipilih
+    # dipilih_set : set indeks kandidat yang sudah dipilih (lookup O(1))
+    # tersedia : list biaya kandidat yang masih bisa dipilih
     # i : untuk perulangan
     # estimasi_sisa : estimasi biaya untuk sisa orang
     # estimasi_total : total taksiran biaya
@@ -84,18 +85,20 @@ class BranchBound:
         if (sisa_orang == 0):
             return node.cost
         elif (sisa_orang < 0):
-            return 9999999   
+            return 9999999
+        # Gunakan set untuk lookup O(1) — perbaikan dari versi sebelumnya
+        dipilih_set = set(node.selected)
         tersedia = []
         for i in range(node.level, n):
-            if (i not in node.selected):
-                tersedia.append(costs[i])       
+            if (i not in dipilih_set):
+                tersedia.append(costs[i])
         if (len(tersedia) < sisa_orang):
-            return 9999999  
+            return 9999999
         tersedia.sort()
         estimasi_sisa = sum(tersedia[:sisa_orang])
         estimasi_total = node.cost + estimasi_sisa
         if (estimasi_total > budget):
-            return 9999999   
+            return 9999999
         return estimasi_total
 
     ## Definisi Method jalankan()
@@ -127,7 +130,8 @@ class BranchBound:
         summary = {
             "nodes_generated": 0,
             "nodes_explored": 0,
-            "nodes_pruned": 0
+            "nodes_pruned": 0,
+            "expansion_order": []
         }
         if (k > n):
             return [], 0, False, summary
@@ -140,6 +144,14 @@ class BranchBound:
         while (not self.empty()):
             current = self.delete()
             summary["nodes_explored"] += 1
+            # Catat urutan ekspansi simpul (expansion_order)
+            summary["expansion_order"].append({
+                "urutan": summary["nodes_explored"],
+                "level": current.level,
+                "selected": list(current.selected),
+                "cost": current.cost,
+                "bound": current.bound
+            })
             if (current.bound >= best_cost):
                 summary["nodes_pruned"] += 1
                 continue
@@ -153,6 +165,8 @@ class BranchBound:
             new_cost = current.cost + costs[level]
             if (new_cost <= budget and len(new_selected) <= k):
                 if (len(new_selected) == k):
+                    # Leaf node: hitung sebagai simpul yang dibangkitkan
+                    summary["nodes_generated"] += 1
                     if (new_cost < best_cost):
                         best_cost = new_cost
                         best_team = list(new_selected)
