@@ -1,6 +1,6 @@
 const API_URL = 'http://localhost:8000';
 
-// ─── Preset Ukuran ────────────────────────────────────────────────────────────
+// Preset Ukuran 
 
 // Terapkan preset ukuran (Small/Medium/Large) dan isi biaya acak
 function applyPreset(n) {
@@ -16,7 +16,7 @@ function applyPreset(n) {
   if (map[n]) document.getElementById(map[n]).classList.add('active');
 }
 
-// ─── Generate Input Kandidat ──────────────────────────────────────────────────
+// Generate Input Kandidat 
 
 // Generate kotak input biaya sesuai jumlah kandidat yang diisi
 function generateCandidateInputs() {
@@ -50,7 +50,7 @@ function generateCandidateInputs() {
   }
 }
 
-// ─── Reset Form ───────────────────────────────────────────────────────────────
+// Reset Form 
 
 function resetForm() {
   document.getElementById('n').value = '';
@@ -62,7 +62,7 @@ function resetForm() {
   document.querySelectorAll('.btn-preset').forEach(btn => btn.classList.remove('active'));
 }
 
-// ─── Solve ────────────────────────────────────────────────────────────────────
+// Solve
 
 async function solve() {
   // Validasi input sebelum dikirim ke backend
@@ -116,7 +116,7 @@ async function solve() {
   }
 }
 
-// ─── Tampilkan Hasil ──────────────────────────────────────────────────────────
+// Tampilkan Hasil 
 
 function tampilkan(data, candidates) {
   const { ada_solusi, selected_team, total_cost, bb_summary } = data;
@@ -126,11 +126,11 @@ function tampilkan(data, candidates) {
 
   let html = '';
 
-  // ── Bagian 1: Status solusi ──
+  // Bagian 1: Status solusi 
   if (!ada_solusi) {
     html += `
       <div class="alert-no-solution">
-        <span class="alert-icon">⚠️</span>
+
         <div>
           <strong>Tidak ada solusi ditemukan.</strong>
           <p>Tidak ada kombinasi tim sebanyak ${document.getElementById('k').value} orang
@@ -148,7 +148,7 @@ function tampilkan(data, candidates) {
 
     html += `
       <div class="result-header">
-        <span class="result-icon">✅</span>
+
         <div>
           <strong>Tim Terpilih Ditemukan</strong>
           <p>Total Biaya: <strong>Rp ${fmt(total_cost)}</strong>
@@ -161,7 +161,7 @@ function tampilkan(data, candidates) {
       </table>`;
   }
 
-  // ── Bagian 2: Statistik B&B ──
+  // Bagian 2: Statistik B&B 
   html += `
     <h3 class="section-title">Ringkasan Proses B&amp;B</h3>
     <div class="stats">
@@ -179,7 +179,7 @@ function tampilkan(data, candidates) {
       </div>
     </div>`;
 
-  // ── Bagian 3: Expansion Order ──
+  // Bagian 3: Expansion Order 
   const eo = bb_summary.expansion_order;
   if (eo && eo.length > 0) {
     // Batasi tampilan maks 50 baris agar tidak berat
@@ -224,14 +224,14 @@ function tampilkan(data, candidates) {
   document.getElementById('hasil').innerHTML = html;
 }
 
-// ─── Helper UI ────────────────────────────────────────────────────────────────
+// Helper UI 
 
 function showAlert(msg) {
   document.getElementById('hasil').innerHTML =
-    `<div class="alert-warn"><span>⚠️</span> ${msg}</div>`;
+    `<div class="alert-warn">${msg}</div>`;
 }
 
 function showError(msg) {
   document.getElementById('hasil').innerHTML =
-    `<div class="alert-error"><span>❌</span> ${msg}</div>`;
+    `<div class="alert-error">${msg}</div>`;
 }
