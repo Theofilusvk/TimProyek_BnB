@@ -21,7 +21,7 @@ body {
   align-items: center;
 }
 
-/* pembungkus konten utama, agak ke bawah tapi tidak center */
+/* line utama*/
 .container {
   position: relative;
   z-index: 1;
@@ -57,7 +57,7 @@ header .subtitle {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-/* tulisan INPUT DATA warna biru tua */
+/* input data*/
 .card h2 {
   font-size: 13px;
   font-weight: 600;
@@ -67,7 +67,7 @@ header .subtitle {
   margin-bottom: 1rem;
 }
 
-/* input n dan k ditampilkan sejajar */
+/* input n dan k*/
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -80,7 +80,7 @@ header .subtitle {
   gap: 5px;
 }
 
-/* input budget lebar penuh */
+/* input budget*/
 .form-group.full-width {
   grid-column: 1 / -1;
 }
@@ -143,7 +143,7 @@ input:focus {
   margin-top: 20px;
 }
 
-/* tombol utama, warna biru sama seperti tulisan input data */
+/* tombol utama*/
 .btn-primary {
   background: #2c4a8c;
   color: #fff;
