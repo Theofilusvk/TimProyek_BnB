@@ -1,37 +1,60 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <meta charset="UTF-8">
   <title>Pemilihan Tim Proyek</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <h2>Pemilihan Tim</h2>
+  <div class="container">
+    <!-- judul halaman -->
+    <header>
+      <h1>Pemilihan Tim Proyek</h1>
+      <p class="subtitle">Optimasi dengan algoritma Branch &amp; Bound</p>
+    </header>
 
-  <label>n (jumlah kandidat, n ≥ 12)
-    <input type="number" id="n" value="" oninput="generateCandidateInputs()" min="12">
-  </label>
-  <label>k (ukuran tim, 5 ≤ k ≤ 10)
-    <input type="number" id="k" value="" min="5" max="10">
-  </label>
-  <label>B (batas anggaran)
-    <input type="number" id="budget" value="">
-  </label>
-  <label>Biaya tiap kandidat
-    <div id="candidate-inputs" class="candidate-grid"></div>
-  </label>
+    <!-- form input data -->
+    <div class="card">
+      <h2>Input Data</h2>
 
-  <div class="btns">
-    <button onclick="solve()">Jalankan B&B</button>
-    <button onclick="testDummy()">Test Dummy</button>
+      <div class="form-grid">
+        <!-- input jumlah kandidat, saat diisi langsung generate kotak biaya -->
+        <div class="form-group">
+          <label for="n">Jumlah Kandidat <span class="hint-inline">(n ≥ 12)</span></label>
+          <input type="number" id="n" min="12" placeholder="contoh: 12" oninput="generateCandidateInputs()">
+        </div>
+
+        <!-- input ukuran tim -->
+        <div class="form-group">
+          <label for="k">Ukuran Tim <span class="hint-inline">(5 ≤ k ≤ 10)</span></label>
+          <input type="number" id="k" min="5" max="10" placeholder="contoh: 5">
+        </div>
+
+        <!-- input batas anggaran -->
+        <div class="form-group full-width">
+          <label for="budget">Batas Anggaran (B)</label>
+          <input type="number" id="budget" placeholder="contoh: 400">
+        </div>
+      </div>
+
+      <!-- kotak input biaya tiap kandidat, muncul otomatis sesuai n -->
+      <div class="form-group" style="margin-top: 16px;">
+        <label>Biaya Tiap Kandidat</label>
+        <div id="candidate-inputs" class="candidate-grid"></div>
+      </div>
+
+      <!-- tombol aksi -->
+      <div class="btns">
+        <button class="btn-primary" onclick="solve()">Jalankan B&amp;B</button>
+        <button class="btn-secondary" onclick="testDummy()">Test Dummy</button>
+      </div>
+    </div>
+
+    <!-- hasil akan ditampilkan di sini oleh app.js -->
+    <div id="hasil"></div>
   </div>
-
-  <div id="hasil"></div>
 
   <script src="app.js"></script>
 </body>
-
 </html>
