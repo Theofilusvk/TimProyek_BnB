@@ -253,7 +253,8 @@ input[type="number"]:focus {
 
 /* ── Alert Validasi ──────────────────────────────────────────── */
 .alert-warn,
-.alert-error {
+.alert-error,
+.alert-success {
   display: flex;
   align-items: flex-start;
   gap: 10px;
@@ -273,6 +274,12 @@ input[type="number"]:focus {
   background: #fef2f2;
   border: 1px solid #ef4444;
   color: #991b1b;
+}
+
+.alert-success {
+  background: #ecfdf5;
+  border: 1px solid #10b981;
+  color: #065f46;
 }
 
 /* ── Alert No Solution ───────────────────────────────────────── */

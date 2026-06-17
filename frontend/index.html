@@ -25,6 +25,9 @@
         <button id="btn-small"  class="btn-preset" onclick="applyPreset(12)">Small (n=12)</button>
         <button id="btn-medium" class="btn-preset" onclick="applyPreset(18)">Medium (n=18)</button>
         <button id="btn-large"  class="btn-preset" onclick="applyPreset(24)">Large (n=24)</button>
+        <div style="width: 1px; height: 20px; background: #cbd5e1; margin: 0 8px;"></div>
+        <input type="file" id="file-upload" accept=".csv, .xlsx, .xls" style="display: none;" onchange="handleFileUpload(event)">
+        <button class="btn-preset" style="background: #e6f4ed; border-color: #1a7a4a; color: #1a7a4a;" onclick="triggerUpload()">📥 Import Excel/CSV</button>
       </div>
 
       <div class="form-grid">

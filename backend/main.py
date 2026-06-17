@@ -1,7 +1,9 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Any
+import pandas as pd
+import io
 
 from algorithm.branch_bound import BranchBound
 
@@ -63,3 +65,26 @@ def solve_team(request: SolveRequest):
             expansion_order=summary["expansion_order"]
         )
     )
+
+@app.post("/upload-data")
+async def upload_data(file: UploadFile = File(...)):
+    try:
+        contents = await file.read()
+        if file.filename.endswith('.csv'):
+            df = pd.read_csv(io.BytesIO(contents), sep=None, engine='python')
+        elif file.filename.endswith('.xlsx') or file.filename.endswith('.xls'):
+            df = pd.read_excel(io.BytesIO(contents))
+        else:
+            raise HTTPException(status_code=400, detail="Format file tidak didukung. Gunakan .csv atau .xlsx")
+        
+        numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
+        numeric_df = df.select_dtypes(include=numerics)
+        
+        if numeric_df.empty:
+            raise HTTPException(status_code=400, detail="Tidak ditemukan kolom angka pada file.")
+            
+        costs = numeric_df.iloc[:, 0].dropna().astype(int).tolist()
+        return {"costs": costs}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Gagal memproses file: {str(e)}")
+

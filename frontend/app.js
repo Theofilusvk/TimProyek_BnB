@@ -252,3 +252,68 @@ function showError(msg) {
   document.getElementById('hasil').innerHTML =
     `<div class="alert-error">${msg}</div>`;
 }
+
+// Fitur Import Excel / CSV 
+
+function triggerUpload() {
+  document.getElementById('file-upload').click();
+}
+
+async function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  document.getElementById('hasil').innerHTML = `
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Membaca file ${file.name}...</p>
+    </div>`;
+
+  try {
+    const res = await fetch(`${API_URL}/upload-data`, {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      showError(err.detail || 'Gagal memproses file.');
+      document.getElementById('file-upload').value = '';
+      return;
+    }
+
+    const data = await res.json();
+    const costs = data.costs;
+
+    if (!costs || costs.length === 0) {
+      showError('Tidak ditemukan data angka yang valid di dalam file.');
+      return;
+    }
+
+    // Update UI
+    document.getElementById('n').value = costs.length;
+    generateCandidateInputs();
+    
+    // Auto-fill values
+    const inputs = document.querySelectorAll('.candidate-cost');
+    costs.forEach((cost, index) => {
+      if (inputs[index]) {
+        inputs[index].value = cost;
+      }
+    });
+
+    document.getElementById('hasil').innerHTML = `<div class="alert-success">Berhasil mengimpor ${costs.length} data biaya dari ${file.name}!</div>`;
+    document.getElementById('file-upload').value = '';
+
+    // Reset aktif preset buttons
+    document.querySelectorAll('.btn-preset').forEach(btn => btn.classList.remove('active'));
+
+  } catch (err) {
+    showError('Gagal mengirim file ke server.');
+    document.getElementById('file-upload').value = '';
+  }
+}
+
