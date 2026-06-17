@@ -145,41 +145,54 @@ class BranchBound:
             current = self.delete()
             summary["nodes_explored"] += 1
             # Catat urutan ekspansi simpul (expansion_order)
-            summary["expansion_order"].append({
+            node_info = {
                 "urutan": summary["nodes_explored"],
                 "level": current.level,
                 "selected": list(current.selected),
+                "tersedia": list(range(current.level, n)),
                 "cost": current.cost,
-                "bound": current.bound
-            })
+                "bound": current.bound,
+                "status": "Diekspansi"
+            }
+            summary["expansion_order"].append(node_info)
+
+            best_cost_display = best_cost if best_cost <= budget else budget
+            
             if (current.bound >= best_cost):
                 summary["nodes_pruned"] += 1
+                summary["expansion_order"][-1]["status"] = f"Pruned (Bound {current.bound} ≥ Best Cost {best_cost_display})"
                 continue
+                
             level = current.level
-            if (level >= n):
-                if (len(current.selected) == k and current.cost < best_cost):
+            
+            # Jika sudah memilih k kandidat, ini adalah leaf (solusi valid)
+            if (len(current.selected) == k):
+                if (current.cost < best_cost):
                     best_cost = current.cost
                     best_team = list(current.selected)
+                    summary["expansion_order"][-1]["status"] = "Solusi Terbaik (Update)"
+                else:
+                    summary["expansion_order"][-1]["status"] = f"Pruned (Cost {current.cost} ≥ Best Cost {best_cost_display})"
                 continue
+                
+            if (level >= n):
+                summary["expansion_order"][-1]["status"] = f"Pruned (Anggota {len(current.selected)} < {k})"
+                continue
+
             new_selected = current.selected + [level]
             new_cost = current.cost + costs[level]
+            
             if (new_cost <= budget and len(new_selected) <= k):
-                if (len(new_selected) == k):
-                    # Leaf node: hitung sebagai simpul yang dibangkitkan
-                    summary["nodes_generated"] += 1
-                    if (new_cost < best_cost):
-                        best_cost = new_cost
-                        best_team = list(new_selected)
+                left_child = Node(level + 1, new_selected, new_cost, 0)
+                left_child.bound = self.hitung_bound(left_child, costs, k, budget, n)
+                summary["nodes_generated"] += 1
+                if (left_child.bound < best_cost):
+                    self.insert(left_child)
                 else:
-                    left_child = Node(level + 1, new_selected, new_cost, 0)
-                    left_child.bound = self.hitung_bound(left_child, costs, k, budget, n)
-                    summary["nodes_generated"] += 1
-                    if (left_child.bound < best_cost):
-                        self.insert(left_child)
-                    else:
-                        summary["nodes_pruned"] += 1
+                    summary["nodes_pruned"] += 1
             else:
                 summary["nodes_pruned"] += 1
+                
             sisa_kandidat = n - (level + 1)
             butuh_orang = k - len(current.selected)
             if (sisa_kandidat >= butuh_orang):

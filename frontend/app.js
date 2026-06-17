@@ -190,13 +190,28 @@ function tampilkan(data, candidates) {
       const selLabel = node.selected.length > 0
         ? node.selected.map(i => `K-${i + 1}`).join(', ')
         : '—';
+      let tersediaLabel = '—';
+      if (node.tersedia && node.tersedia.length > 0) {
+        if (node.tersedia.length > 3) {
+          tersediaLabel = `K-${node.tersedia[0] + 1} s.d K-${node.tersedia[node.tersedia.length - 1] + 1}`;
+        } else {
+          tersediaLabel = node.tersedia.map(i => `K-${i + 1}`).join(', ');
+        }
+      }
       const boundLabel = node.bound >= 9999999 ? '∞ (pruned)' : node.bound;
+      
+      let statusStyle = '';
+      if (node.status && node.status.includes('Pruned')) statusStyle = 'color: #e53e3e;';
+      else if (node.status && node.status.includes('Solusi')) statusStyle = 'color: #38a169; font-weight: bold;';
+
       return `<tr>
         <td class="text-center">${node.urutan}</td>
         <td class="text-center">${node.level}</td>
         <td>${selLabel}</td>
+        <td><small style="color: #666;">${tersediaLabel}</small></td>
         <td class="text-right">${node.cost}</td>
         <td class="text-right">${boundLabel}</td>
+        <td style="${statusStyle}">${node.status || 'Diekspansi'}</td>
       </tr>`;
     }).join('');
 
@@ -209,8 +224,10 @@ function tampilkan(data, candidates) {
               <th class="text-center">#</th>
               <th class="text-center">Level</th>
               <th>Kandidat Terpilih</th>
+              <th>Kandidat Tersedia</th>
               <th class="text-right">Cost</th>
               <th class="text-right">Bound (ĉ)</th>
+              <th>Status / Prune</th>
             </tr>
           </thead>
           <tbody>${eoRows}</tbody>
